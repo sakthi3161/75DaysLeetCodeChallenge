@@ -6,25 +6,20 @@
 #         self.right = right
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        def diameter(node, res):
-            # Base case: if the node is None, return 0
+        self.diameter = 0
+        
+        def height(node):
             if not node:
                 return 0
             
-            # Recursively calculate the diameter of left and right subtrees
-            left = diameter(node.left, res)
-            right = diameter(node.right, res)
-
-            # Update the maximum diameter encountered so far
-            res[0] = max(res[0], left + right)
+            left = height(node.left)
+            right = height(node.right)
             
-            # Return the depth of the current node
-            return max(left, right) + 1
+            # update diameter
+            self.diameter = max(self.diameter, left + right)
+            
+            return 1 + max(left, right)
         
-        # Initialize a list to hold the maximum diameter encountered
-        res = [0]
-        # Call the diameter function starting from the root
-        diameter(root, res)
-        # Return the maximum diameter encountered
-        return res[0]
+        height(root)
+        return self.diameter
         
